@@ -1,22 +1,23 @@
 {
-  "name": "de-v-ai-bot",
-  "version": "1.0.0",
-  "description": "A Telegram bot for AI and development news",
-  "main": "api/webhook.js",
-  "scripts": {
-    "start": "node api/webhook.js",
-    "dev": "vercel dev",
-    "deploy": "vercel --prod"
-  },
-  "dependencies": {
-    "@vercel/node": "^3.0.0",
-    "node-fetch": "^2.6.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15",
-    "vercel": "^28.0.0"
-  },
-  "engines": {
-    "node": "18.x"
+    "name": "de-v-ai-bot",
+    "version": "1.0.0",
+    "description": "A Telegram bot for AI and development news",
+    "type": "module",
+    "main": "api/webhook.js",
+    "scripts": {
+      "start": "node api/webhook.js",
+      "dev": "vercel dev",
+      "deploy": "vercel --prod"
+    },
+    "dependencies": {
+      "node-fetch": "^2.6.1"
+    },
+    "devDependencies": {
+      "vercel": "^28.0.0",
+      "nodemon": "^2.0.15"
+    },
+    "engines": {
+      "node": "18.x"
+    }
   }
-}
+  
