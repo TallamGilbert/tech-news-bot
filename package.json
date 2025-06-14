@@ -9,7 +9,7 @@
     "deploy": "vercel --prod"
   },
   "dependencies": {
-    "@vercel/edge": "^1.0.0",
+    "@vercel/node": "^3.0.0",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {

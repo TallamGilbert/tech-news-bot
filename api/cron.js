@@ -1,15 +1,9 @@
 // api/cron.js - Daily news delivery cron job
 import { fetchNewsFromAllSources } from './news-sources';
 
-export const config = {
-  runtime: 'edge',
-  regions: ['iad1'],
-  schedule: '0 8 * * *' // Run at 8 AM UTC every day
-};
-
-export default async function handler(req) {
-  if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
-    return new Response('Unauthorized', { status: 401 });
+export default async function handler(req, res) {
+  if (req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {
+    return res.status(401).json({ error: 'Unauthorized' });
   }
 
   try {
@@ -17,7 +11,7 @@ export default async function handler(req) {
     const SUBSCRIBED_CHATS = process.env.SUBSCRIBED_CHATS?.split(',') || [];
 
     if (SUBSCRIBED_CHATS.length === 0) {
-      return new Response('No subscribed chats found', { status: 200 });
+      return res.status(200).json({ message: 'No subscribed chats found' });
     }
 
     const topStories = await fetchNewsFromAllSources();
@@ -27,10 +21,10 @@ export default async function handler(req) {
       await sendMessage(chatId, message, BOT_TOKEN, null, 'Markdown');
     }
 
-    return new Response('Daily news digest sent successfully', { status: 200 });
+    return res.status(200).json({ message: 'Daily news digest sent successfully' });
   } catch (error) {
     console.error('Cron job error:', error);
-    return new Response('Error sending daily digest', { status: 500 });
+    return res.status(500).json({ error: 'Error sending daily digest' });
   }
 }
 
