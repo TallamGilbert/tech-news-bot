@@ -35,6 +35,7 @@ export default async function handler(req, res) {
   🔥 /trending - Trending tech stories
   🏢 /startups - AI startup news
   💰 /crypto - AI & crypto news
+  📚 /cheat [topic] - Get a cheat sheet (e.g., /cheat git)
   ℹ️ /help - Show this help message
   
   Choose a category or type a command to get started!`;
@@ -58,6 +59,8 @@ export default async function handler(req, res) {
       await sendMessage(chatId, welcomeMessage, botToken, keyboard);
     } else if (text === '/help') {
       await sendHelpMessage(chatId, botToken);
+    } else if (text.startsWith('/cheat ')) {
+      await handleCheatSheet(chatId, text.slice(7), botToken);
     } else if (text === '/ai') {
       await sendNews(chatId, 'ai', botToken);
     } else if (text === '/dev') {
@@ -230,4 +233,122 @@ export default async function handler(req, res) {
       hour: '2-digit',
       minute: '2-digit'
     });
+  }
+  
+  async function handleCheatSheet(chatId, topic, botToken) {
+    const cheatSheets = {
+      git: `📚 **Git Cheat Sheet**
+  
+  **Basic Commands:**
+  \`git init\` - Initialize a new repository
+  \`git clone [url]\` - Clone a repository
+  \`git add [file]\` - Stage changes
+  \`git commit -m "[message]"\` - Commit changes
+  \`git push\` - Push changes to remote
+  \`git pull\` - Pull changes from remote
+  
+  **Branching:**
+  \`git branch\` - List branches
+  \`git branch [name]\` - Create branch
+  \`git checkout [branch]\` - Switch branch
+  \`git merge [branch]\` - Merge branch
+  
+  **Status & History:**
+  \`git status\` - Check status
+  \`git log\` - View commit history
+  \`git diff\` - View changes
+  
+  **Undoing Changes:**
+  \`git reset [file]\` - Unstage changes
+  \`git checkout -- [file]\` - Discard changes
+  \`git revert [commit]\` - Revert commit`,
+  
+      regex: `📚 **Regular Expressions Cheat Sheet**
+  
+  **Basic Patterns:**
+  \`.\` - Any character
+  \`\\w\` - Word character
+  \`\\d\` - Digit
+  \`\\s\` - Whitespace
+  \`^\\s*\` - Start of line
+  \`\\s*$\` - End of line
+  
+  **Quantifiers:**
+  \`*\` - 0 or more
+  \`+\` - 1 or more
+  \`?\` - 0 or 1
+  \`{n}\` - Exactly n
+  \`{n,}\` - n or more
+  \`{n,m}\` - Between n and m
+  
+  **Groups & References:**
+  \`(pattern)\` - Capturing group
+  \`(?:pattern)\` - Non-capturing group
+  \`\\1\` - Backreference
+  
+  **Common Examples:**
+  Email: \`[\\w.-]+@[\\w.-]+\\.[\\w.-]+\`
+  URL: \`https?://[\\w.-]+\\.[\\w.-]+\\S*\`
+  Phone: \`\\d{3}[-.]?\\d{3}[-.]?\\d{4}\``,
+  
+      docker: `📚 **Docker Cheat Sheet**
+  
+  **Basic Commands:**
+  \`docker build -t [name] .\` - Build image
+  \`docker run [image]\` - Run container
+  \`docker ps\` - List containers
+  \`docker images\` - List images
+  
+  **Container Management:**
+  \`docker start [container]\` - Start container
+  \`docker stop [container]\` - Stop container
+  \`docker rm [container]\` - Remove container
+  \`docker rmi [image]\` - Remove image
+  
+  **Networking:**
+  \`docker network ls\` - List networks
+  \`docker network create [name]\` - Create network
+  \`docker network connect [network] [container]\` - Connect container
+  
+  **Volumes:**
+  \`docker volume ls\` - List volumes
+  \`docker volume create [name]\` - Create volume
+  \`docker volume rm [name]\` - Remove volume`,
+  
+      linux: `📚 **Linux Command Line Cheat Sheet**
+  
+  **File Operations:**
+  \`ls\` - List files
+  \`cd [dir]\` - Change directory
+  \`pwd\` - Print working directory
+  \`cp [src] [dest]\` - Copy files
+  \`mv [src] [dest]\` - Move files
+  \`rm [file]\` - Remove files
+  
+  **File Content:**
+  \`cat [file]\` - View file
+  \`less [file]\` - View file (scrollable)
+  \`head [file]\` - View first lines
+  \`tail [file]\` - View last lines
+  \`grep [pattern] [file]\` - Search in file
+  
+  **System:**
+  \`ps\` - List processes
+  \`top\` - Monitor processes
+  \`kill [pid]\` - Kill process
+  \`df\` - Disk space
+  \`free\` - Memory usage`
+    };
+  
+    const topicLower = topic.toLowerCase();
+    if (cheatSheets[topicLower]) {
+      await sendMessage(chatId, cheatSheets[topicLower], botToken, null, 'Markdown');
+    } else {
+      const availableTopics = Object.keys(cheatSheets).join(', ');
+      await sendMessage(
+        chatId,
+        `Sorry, I don't have a cheat sheet for "${topic}". Available topics: ${availableTopics}`,
+        botToken
+      );
+    }
   }

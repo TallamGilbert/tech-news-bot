@@ -3,13 +3,27 @@
   "builds": [
     {
       "src": "api/webhook.js",
-      "use": "@vercel/node"
+      "use": "@vercel/edge"
+    },
+    {
+      "src": "api/cron.js",
+      "use": "@vercel/edge"
     }
   ],
   "routes": [
     {
       "src": "/api/webhook",
       "dest": "/api/webhook.js"
+    },
+    {
+      "src": "/api/cron",
+      "dest": "/api/cron.js"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron",
+      "schedule": "0 8 * * *"
     }
   ]
 }
