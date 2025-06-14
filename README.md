@@ -1,4 +1,4 @@
-# DevAI Bot 🤖
+# De_v_aI Bot 🤖
 
 A Telegram bot that provides the latest news and updates about AI and development.
 
@@ -15,7 +15,7 @@ A Telegram bot that provides the latest news and updates about AI and developmen
 1. Create a new Telegram bot:
    - Message [@BotFather](https://t.me/botfather) on Telegram
    - Use the `/newbot` command
-   - Set the bot name to "devai"
+   - Set the bot name to "De_v_aI"
    - Set the username to "De_v_aI_Bot"
    - Save the bot token provided by BotFather
 

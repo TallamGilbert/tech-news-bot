@@ -1,4 +1,4 @@
-// api/webhook.js - Main webhook handler for devai bot
+// api/webhook.js - Main webhook handler for De_v_aI bot
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
       return res.status(405).json({ error: 'Method not allowed' });
@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     const text = message.text;
   
     if (text === '/start') {
-      const welcomeMessage = `🤖 Welcome to DevAI Bot!
+      const welcomeMessage = `🤖 Welcome to De_v_aI Bot!
   
   I'm your AI and development news companion. Here's what I can do:
   
@@ -193,7 +193,7 @@ export default async function handler(req, res) {
   }
   
   async function sendHelpMessage(chatId, botToken) {
-    const helpText = `🤖 **DevAI Bot Help**
+    const helpText = `🤖 **De_v_aI Bot Help**
   
   **Available Commands:**
   🤖 /ai - Latest AI news and updates

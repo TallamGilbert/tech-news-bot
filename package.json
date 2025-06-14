@@ -1,5 +1,5 @@
 {
-  "name": "devai-bot",
+  "name": "de-v-ai-bot",
   "version": "1.0.0",
   "description": "A Telegram bot for AI and development news",
   "main": "api/webhook.js",
